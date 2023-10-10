@@ -19,8 +19,8 @@ if (i * j < 10 && j != 0)
 {
 _putchar(' ');
 }
-_putchar((i * j) / 10 + '0');
-_putchar((i * j) % 10 + '0');
+_putchar((i * j) / 10);
+_putchar((i * j) % 10);
 }
 _putchar('\n');
 }
