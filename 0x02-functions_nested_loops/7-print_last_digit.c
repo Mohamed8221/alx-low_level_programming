@@ -12,7 +12,7 @@ int last_digit;
 if (n < 0)
 n = -n;
 last_digit = n % 10;
-printf("\n%d%d", last_digit, last_digit);
+printf("%d%d", last_digit, last_digit);
 return last_digit;
 }
 
