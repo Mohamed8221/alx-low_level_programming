@@ -6,26 +6,27 @@
 */
 int main(void)
 {
-int count;
-unsigned long i = 0, j = 1, sum;
+int a = 1, b = 2;
+int count = 2;
 
-for (count = 0; count < 98; count++)
+_putchar(a + '0');
+_putchar(',');
+_putchar(' ');
+_putchar(b + '0');
+_putchar(',');
+_putchar(' ');
+
+while (count < 98)
 {
-sum = i + j;
-printf("%lu", sum);
-
-i = j;
-j = sum;
-
-if (count == 97)
-{
-printf("\n");
-}
-else
-{
-printf(", ");
-}
+int temp = b;
+b = a + b;
+a = temp;
+_putchar(b + '0');
+_putchar(',');
+_putchar(' ');
+count++;
 }
 
+_putchar('\n');
 return (0);
 }
