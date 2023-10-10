@@ -6,8 +6,7 @@ void print_alphabet(void)
 char letter = 'a';
 while (letter <= 'z')
 {
-putchar(letter);
+printf(letter"\n");
 letter++;
 }
-putchar('\n');
 }
