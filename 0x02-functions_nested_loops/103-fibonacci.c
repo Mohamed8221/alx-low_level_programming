@@ -7,7 +7,7 @@
 */
 int main(void)
 {
-long int i = 1, j = 2, sum = 0, next;
+long int i = 1, j = 2, sum = 0;
 
 while (i <= 4000000 && j <= 4000000)
 {
