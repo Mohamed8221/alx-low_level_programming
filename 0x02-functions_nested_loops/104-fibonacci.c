@@ -2,7 +2,7 @@
 /**
 * fibonacci - Prints the first 98 Fibonacci numbers.
 */
-void main(void)
+int main(void)
 {
 int a = 1, b = 2;
 int count = 2;
