@@ -5,9 +5,23 @@
  */
 void times_table(void)
 {
-int i;
+int i, j;
 for (i = 0; i <= 9; i++)
 {
-printf("9 * %d = %d\n", i, 9 * i);
+for (j = 0; j <= 9; j++)
+{
+if (j != 0)
+{
+_putchar(',');
+_putchar(' ');
+}
+if (i * j < 10 && j != 0)
+{
+_putchar(' ');
+}
+_putchar((i * j) / 10 + '0');
+_putchar((i * j) % 10 + '0');
+}
+_putchar('\n');
 }
 }
