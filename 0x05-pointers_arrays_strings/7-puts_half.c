@@ -13,9 +13,8 @@ int length = strlen(str);
 int start_index = length / 2;
 if (length % 2 != 0)
 start_index = (length - 1) / 2;
-int i;
 
-for (i = start_index; i < length; i++)
+for (int i = start_index; i < length; i++)
 {
 putchar(str[i]);
 }
