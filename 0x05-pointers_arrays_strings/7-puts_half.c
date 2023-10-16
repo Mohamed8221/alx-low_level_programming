@@ -3,21 +3,21 @@
 #include <string.h>
 
 /**
-* puts_half - Prints half of a string, followed by a new line.
+* puts_half - Prints second half of a string
+* @str: The string to be printed
 *
-* @str: Pointer to the string.
+* Return: void
 */
 void puts_half(char *str)
 {
-int length = strlen(str);
-int start_index = length / 2;
-if (length % 2 != 0)
-start_index = (length - 1) / 2;
+int len = strlen(str);
+int n = len / 2;
 
-for (int i = start_index; i < length; i++)
-{
+if (len % 2 != 0)
+n = (len - 1) / 2;
+
+for (int i = n; i < len; i++)
 putchar(str[i]);
-}
 
 putchar('\n');
 }
