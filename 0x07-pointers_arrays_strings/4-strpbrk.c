@@ -1,26 +1,27 @@
 #include "main.h"
 
 /**
-* _strchr - locates a character in a string
-* @s: string to be searched
-* @c: character to be located
+* _strpbrk - searches a string for any of a set of bytes
+* @s: string to search
+* @accept: set of bytes to search for
 *
-* Return: pointer to the first occurrence of c in s, or NULL if not found
+* Return: pointer to the byte in s that matches one of the bytes in accept,
+*         or NULL if no such byte is found
 */
-char *_strchr(char *s, char c)
+char *_strpbrk(char *s, char *accept)
 {
+char *p;
+
 while (*s)
 {
-if (*s == c)
+for (p = accept; *p; p++)
+{
+if (*s == *p)
 {
 return (s);
+}
 }
 s++;
-}
-
-if (*s == c)
-{
-return (s);
 }
 
 return (NULL);
