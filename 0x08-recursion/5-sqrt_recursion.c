@@ -1,20 +1,15 @@
 #include "main.h"
 /**
-* sqrt_check - checks for the square root of c
-* @i: guess at sqrt
-* @n: number to find sqrt of
+* _sqrt_recursion - returns the natural square root of a number.
+* @n: number to calculate the square root of.
 *
-* Return: -1 or sqrt of c
+* Return: natural square root of n, -1 if n does not have a natural square root.
 */
-int _sqrt_check(int i, int n)
+int _sqrt_recursion(int n)
 {
-if (i * i == n)
-{
-return (i);
-}
-if (i * i > n)
-{
+if (n < 0)
 return (-1);
-}
-return (_sqrt_check(i + 1, n));
+if (n == 0 || n == 1)
+return (n);
+return (_sqrt_helper(n, 1));
 }
