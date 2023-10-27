@@ -1,5 +1,4 @@
 #include "main.h"
-#include <unistd.h>
 
 /**
  * _puts - Prints a string, followed by a new line, to stdout.
@@ -8,13 +7,13 @@
  */
 void _puts(char *str)
 {
-	int i = 0;
+    int i = 0;
 
-	while (str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
+    while (str[i] != '\0')
+    {
+        _putchar(str[i]);
+        i++;
+    }
 
-	write(1, "\n", 1);
+    _putchar('\n');
 }
