@@ -6,35 +6,34 @@
 * strtow - splits a string into words
 * @str: the string to split
 *
-* Return: pointer to an array of strings (words)
+* Return: pointer to an array of words or NULL if it fails
 */
 char **strtow(char *str)
 {
-char **words = NULL;
-int i, j, k, len, count = 0;
+char **words;
+int i, j, k, l, word_count = 0;
 
-if (str == NULL || str[0] == '\0')
+if (str == NULL || *str == '\0')
 return (NULL);
 
 for (i = 0; str[i]; i++)
-if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\n') && str[i + 1] != ' '
-&& str[i + 1] != '\t' && str[i + 1] != '\n')
-count++;
+if ((str[i] != ' ' && str[i + 1] == ' ') ||
+(str[i] != ' ' && str[i + 1] == '\0'))
+word_count++;
 
-words = malloc(sizeof(char *) * (count + 2));
+words = malloc((word_count + 1) * sizeof(char *));
 if (words == NULL)
 return (NULL);
 
-i = j = 0;
-while (i < count)
+for (i = 0, k = 0; i < word_count; i++)
 {
-while (str[j] == ' ' || str[j] == '\t' || str[j] == '\n')
-j++;
-len = 0;
-while (str[j + len] != ' ' && str[j + len] != '\t' && str[j + len] != '\n'
-&& str[j + len])
-len++;
-words[i] = malloc(len + 1);
+while (str[k] == ' ')
+k++;
+
+for (j = k; str[j] != ' ' && str[j] != '\0'; j++)
+;
+
+words[i] = malloc((j - k + 1) * sizeof(char));
 if (words[i] == NULL)
 {
 while (i >= 0)
@@ -42,12 +41,12 @@ free(words[--i]);
 free(words);
 return (NULL);
 }
-for (k = 0; k < len; k++)
-words[i][k] = str[j + k];
-words[i++][k] = '\0';
-j += len;
+
+for (l = 0; k < j; l++, k++)
+words[i][l] = str[k];
+words[i][l] = '\0';
 }
-words[i] = NULL;
+words[word_count] = NULL;
 
 return (words);
 }
