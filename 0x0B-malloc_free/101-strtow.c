@@ -6,27 +6,46 @@
 * strtow - splits a string into words
 * @str: the string to split
 *
-* Return: a pointer to an array of strings (words)
+* Return: pointer to an array of strings (words)
 */
 char **strtow(char *str)
 {
-if (str == NULL || *str == '\0')
+char **words = NULL;
+int i, j, k, len, count = 0;
+
+if (str == NULL || str[0] == '\0')
 return (NULL);
 
-char **words = malloc(sizeof(char *));
+for (i = 0; str[i]; i++)
+if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\n') && str[i + 1] != ' '
+&& str[i + 1] != '\t' && str[i + 1] != '\n')
+count++;
+
+words = malloc(sizeof(char *) * (count + 2));
 if (words == NULL)
 return (NULL);
 
-char *token = strtok(str, " ");
-int i = 0;
-while (token != NULL)
+i = j = 0;
+while (i < count)
 {
-words[i] = token;
-i++;
-words = realloc(words, sizeof(char *) * (i + 1));
-if (words == NULL)
+while (str[j] == ' ' || str[j] == '\t' || str[j] == '\n')
+j++;
+len = 0;
+while (str[j + len] != ' ' && str[j + len] != '\t' && str[j + len] != '\n'
+&& str[j + len])
+len++;
+words[i] = malloc(len + 1);
+if (words[i] == NULL)
+{
+while (i >= 0)
+free(words[--i]);
+free(words);
 return (NULL);
-token = strtok(NULL, " ");
+}
+for (k = 0; k < len; k++)
+words[i][k] = str[j + k];
+words[i++][k] = '\0';
+j += len;
 }
 words[i] = NULL;
 
