@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -6,34 +7,29 @@
 * strtow - splits a string into words
 * @str: the string to split
 *
-* Return: pointer to an array of words or NULL if it fails
+* Return: pointer to an array of strings (words)
 */
 char **strtow(char *str)
 {
 char **words;
-int i, j, k, l, word_count = 0;
+char *word;
+int i, count;
 
-if (str == NULL || *str == '\0')
+if (str == NULL || str[0] == '\0')
 return (NULL);
 
-for (i = 0; str[i]; i++)
-if ((str[i] != ' ' && str[i + 1] == ' ') ||
-(str[i] != ' ' && str[i + 1] == '\0'))
-word_count++;
+for (i = 0, count = 0; str[i]; i++)
+if (str[i] == ' ' && str[i + 1] != ' ' && str[i + 1] != '\0')
+count++;
 
-words = malloc((word_count + 1) * sizeof(char *));
+words = malloc((count + 2) * sizeof(char *));
 if (words == NULL)
 return (NULL);
 
-for (i = 0, k = 0; i < word_count; i++)
+word = strtok(str, " ");
+for (i = 0; word != NULL; i++)
 {
-while (str[k] == ' ')
-k++;
-
-for (j = k; str[j] != ' ' && str[j] != '\0'; j++)
-;
-
-words[i] = malloc((j - k + 1) * sizeof(char));
+words[i] = malloc((strlen(word) + 1) * sizeof(char));
 if (words[i] == NULL)
 {
 while (i >= 0)
@@ -42,11 +38,10 @@ free(words);
 return (NULL);
 }
 
-for (l = 0; k < j; l++, k++)
-words[i][l] = str[k];
-words[i][l] = '\0';
+strcpy(words[i], word);
+word = strtok(NULL, " ");
 }
-words[word_count] = NULL;
+words[i] = NULL;
 
 return (words);
 }
