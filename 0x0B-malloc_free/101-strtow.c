@@ -1,5 +1,3 @@
-#include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -11,37 +9,44 @@
 */
 char **strtow(char *str)
 {
-char **words;
-char *word;
-int i, count;
+char **words = NULL;
+int i, j, k, len, count = 0;
 
 if (str == NULL || str[0] == '\0')
 return (NULL);
 
-for (i = 0, count = 0; str[i]; i++)
-if (str[i] == ' ' && str[i + 1] != ' ' && str[i + 1] != '\0')
+for (i = 0; str[i]; i++)
+if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\n') &&
+str[i + 1] != ' ' && str[i + 1] != '\t' && str[i + 1] != '\n')
 count++;
 
-words = malloc((count + 2) * sizeof(char *));
+words = malloc(sizeof(char *) * (count + 2));
 if (words == NULL)
 return (NULL);
 
-word = strtok(str, " ");
-for (i = 0; word != NULL; i++)
+for (i = 0, j = 0; i < count + 1; i++)
 {
-words[i] = malloc((strlen(word) + 1) * sizeof(char));
+for (len = 0; str[j] != ' '
+&& str[j] != '\t' && str[j] != '\n' && str[j]; j++, len++)
+;
+
+words[i] = malloc(sizeof(char) * (len + 1));
 if (words[i] == NULL)
 {
-while (i >= 0)
-free(words[--i]);
+while (--i >= 0)
+free(words[i]);
 free(words);
 return (NULL);
 }
 
-strcpy(words[i], word);
-word = strtok(NULL, " ");
+for (k = 0; k < len; k++, j++)
+words[i][k] = str[j - len];
+words[i][k] = '\0';
+
+while ((str[j] == ' ' || str[j] == '\t' || str[j] == '\n') && str[j])
+j++;
 }
-words[i] = NULL;
+words[count + 1] = NULL;
 
 return (words);
 }
