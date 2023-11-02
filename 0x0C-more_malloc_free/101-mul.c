@@ -1,91 +1,57 @@
 #include "main.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /**
- * _puts - prints a string, followed by a new line,
- * @str: pointer to the string to print
- * Return: void
+* multiply - multiplies two positive numbers
+* @num1: first number
+* @num2: second number
 */
-
-
-void _puts(char *str)
+void multiply(char num1[], char num2[])
 {
-int i = 0;
-while (str[i])
+int len1 = strlen(num1);
+int len2 = strlen(num2);
+int *result = calloc(len1 + len2, sizeof(int));
+int i, j;
+int start;
+
+for (i = len1 - 1; i >= 0; i--)
 {
-	_putchar(str[i]);
-	i++;
+for (j = len2 - 1; j >= 0; j--)
+{
+result[i + j + 1] += (num1[i] - '0') * (num2[j] - '0');
+result[i + j] += result[i + j + 1] / 10;
+result[i + j + 1] %= 10;
+}
 }
 
-}
+/* Print the result */
+start = result[0] == 0 ? 1 : 0;
 
-/**
- * _atoi - convert a string to an integer.
- * @s: char type string
- * Return: integer converted
- */
+for (i = start; i < len1 + len2; i++)
+printf("%d", result[i]);
+printf("\n");
 
-int _atoi(const char *s)
-{
-    int sign = 1;
-	unsigned long int resp = 0, firstNum, i;
-
-	for (firstNum = 0; !(s[firstNum] >= 48 && s[firstNum] <= 57); firstNum++)
-	{
-		if (s[firstNum] == '-')
-		{
-			sign *= -1;
-		}
-	}
-
-	for (i = firstNum; s[i] >= 48 && s[i] <= 57; i++)
-	{
-		resp *= 10;
-		resp += (s[i] - 48);
-	}
-
-	return (sign * resp);
+free(result);
 }
 
 /**
- * print_int - prints an integer.
- * @n: int
- * Return: 0
- */
-
-void print_int(unsigned long int n)
+* main - multiplies two positive numbers
+* @argc: argument count
+* @argv: argument vector
+* Return: int
+*/
+int main(int argc, char *argv[])
 {
-
-unsigned  long int divisor = 1, i, resp;
-
-for (i = 0; n / divisor > 9; i++, divisor *= 10)
-;
-
-for (; divisor >= 1; n %= divisor, divisor /= 10)
-{
-	resp = n / divisor;
-	_putchar('0' + resp);
-}
-
-}
-
-/**
- * main - print the result of the multiplication, followed by a new line
- * @argc: int
- * @argv: list
- * Return: 0
- */
-
-int main(int argc, char const *argv[])
-{
-(void)argc;
-
 if (argc != 3)
 {
-	_puts("Error ");
-	exit(98);
+printf("Error\n");
+exit(98);
 }
-print_int(_atoi(argv[1]) * _atoi(argv[2]));
-_putchar('\n');
+
+multiply(argv[1], argv[2]);
 
 return (0);
 }
