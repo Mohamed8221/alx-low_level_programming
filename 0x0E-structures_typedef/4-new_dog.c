@@ -1,84 +1,61 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "dog.h"
 
 /**
-* _getLength - a function that gets a length of string
+* _strdup - duplicates a string
+* @str: string to duplicate
 *
-* @input: the string to get the length
-*
-* Return: length of @input
+* Return: pointer to the duplicated string
 */
-
-int _getLength(const char *input)
+char *_strdup(char *str)
 {
-int len = 0;
+char *dup;
+int i, len = 0;
 
-while (*input++)
+while (str[len])
 len++;
-return (len);
+dup = malloc(len + 1);
+if (dup == NULL)
+return (NULL);
+for (i = 0; i < len; i++)
+dup[i] = str[i];
+dup[i] = '\0';
+return (dup);
 }
 
 /**
-* _copyString - a function that returns @target with a copy of a string
+* new_dog - creates a new dog
+* @name: name of dog
+* @age: age of dog
+* @owner: owner of dog
 *
-* @source: string to copy
-* @target: copy string to here
-*
-* Return: @target
+* Return: pointer to new dog
 */
-
-char *_copyString(char *target, char *source)
-{
-int index;
-
-for (index = 0; source[index]; index++)
-target[index] = source[index];
-target[index] = '\0';
-
-return (target);
-}
-
-/**
-* createDog - a function that creates a new dog
-*
-* @dogName: name of dog
-* @dogAge: age of dog
-* @dogOwner: dog owner
-*
-* Return: struct pointer dog
-*         NULL if function fails
-*/
-
-dog_t *new_dog(char *dogName, float dogAge, char *dogOwner)
+dog_t *new_dog(char *name, float age, char *owner)
 {
 dog_t *newDog;
 
-/* if dogName and dogOwner are empty and dogAge is less than zero return null*/
-if (!dogName || dogAge < 0 || !dogOwner)
-return (NULL);
-
-newDog = (dog_t *) malloc(sizeof(dog_t));
+newDog = malloc(sizeof(dog_t));
 if (newDog == NULL)
 return (NULL);
 
-newDog->name = malloc(sizeof(char) * (_getLength(dogName) + 1));
-if ((*newDog).name == NULL)
+newDog->name = _strdup(name);
+if (newDog->name == NULL)
 {
 free(newDog);
 return (NULL);
 }
 
-newDog->owner = malloc(sizeof(char) * (_getLength(dogOwner) + 1));
-if ((*newDog).owner == NULL)
+newDog->age = age;
+
+newDog->owner = _strdup(owner);
+if (newDog->owner == NULL)
 {
 free(newDog->name);
 free(newDog);
 return (NULL);
 }
-
-newDog->name = _copyString(newDog->name, dogName);
-newDog->age = dogAge;
-newDog->owner = _copyString(newDog->owner, dogOwner);
 
 return (newDog);
 }
