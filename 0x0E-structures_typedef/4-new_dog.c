@@ -1,49 +1,83 @@
 #include <stdlib.h>
-#include <string.h>
 #include "dog.h"
 
 /**
-* new_dog     - Create a new dog variable
-* @name:        Name of the dog
-* @age:         Age of the dog
-* @owner:       Owner of the dog
-* Return:       Pointer to new dog variable
+* _duplicate  -   Create a duplicate of the input argument
+* @input:      Data to duplicate
+* Return:      Pointer
 */
 
-dog_t *new_dog(char *name, float age, char *owner)
+char *_duplicate(char *input)
 {
-dog_t *newDog;
-char *dogName, *dogOwner;
+char *dup;
+int i, length;
 
-if (name == NULL || owner == NULL)
-{
-return (NULL);
-}
-
-newDog = malloc(sizeof(dog_t));
-if (newDog == NULL)
+if (input == NULL)
 {
 return (NULL);
 }
 
-dogName = strdup(name);
-if (dogName == NULL)
+for (length = 0; input[length] != '\0'; length++)
+;
+
+dup = malloc(sizeof(char) * (length + 1));
+
+if (dup == NULL)
 {
-free(newDog);
 return (NULL);
 }
-newDog->name = dogName;
 
-newDog->age = age;
-
-dogOwner = strdup(owner);
-if (dogOwner == NULL)
+for (i = 0; input[i] != '\0'; i++)
 {
-free(newDog->name);
-free(newDog);
+dup[i] = input[i];
+}
+
+dup[i] = '\0';
+return (dup);
+}
+
+/**
+* create_dog     - Create a new dog object
+* @dog_name:        Name of the dog
+* @dog_age:         Age of the dog
+* @dog_owner:       Owner of the dog
+* Return:           Pointer to new dog object
+*/
+
+dog_t *create_dog(char *dog_name, float dog_age, char *dog_owner)
+{
+dog_t *fido;
+char *dup_name, *dup_owner;
+
+if (dog_name == NULL || dog_owner == NULL)
+{
 return (NULL);
 }
-newDog->owner = dogOwner;
 
-return (newDog);
+fido = malloc(sizeof(dog_t));
+if (fido == NULL)
+{
+return (NULL);
+}
+
+dup_name = _duplicate(dog_name);
+if (dup_name == NULL)
+{
+free(fido);
+return (NULL);
+}
+(*fido).name = dup_name;
+
+(*fido).age = dog_age;
+
+dup_owner = _duplicate(dog_owner);
+if (dup_owner == NULL)
+{
+free((*fido).name);
+free(fido);
+return (NULL);
+}
+(*fido).owner = dup_owner;
+
+return (fido);
 }
