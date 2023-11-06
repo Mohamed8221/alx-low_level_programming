@@ -2,82 +2,83 @@
 #include "dog.h"
 
 /**
-* _duplicate  -   Make a copy of passed in argument
-* @original:      Data to make copy of
-* Return:    Pointer
+* _getLength - a function that gets a length of string
+*
+* @input: the string to get the length
+*
+* Return: length of @input
 */
 
-char *_duplicate(char *original)
+int _getLength(const char *input)
 {
-char *copy;
-int index, length;
+int len = 0;
 
-if (original == NULL)
-{
-return (NULL);
-}
-
-for (length = 0; original[length] != '\0'; length++)
-;
-
-copy = malloc(sizeof(char) * (length + 1));
-
-if (copy == NULL)
-{
-return (NULL);
-}
-
-for (index = 0; original[index] != '\0'; index++)
-{
-copy[index] = original[index];
-}
-
-copy[index] = '\0';
-return (copy);
+while (*input++)
+len++;
+return (len);
 }
 
 /**
-* create_dog     - Create a new dog variable
-* @dog_name:        Name of the dog
-* @dog_age:         Age of the dog
-* @dog_owner:       Owner of the dog
-* Return:       Pointer to new dog variable
+* _copyString - a function that returns @target with a copy of a string
+*
+* @source: string to copy
+* @target: copy string to here
+*
+* Return: @target
 */
 
-dog_t *create_dog(char *dog_name, float dog_age, char *dog_owner)
+char *_copyString(char *target, char *source)
 {
-dog_t *fido;
-char *copy_name, *copy_owner;
+int index;
 
-if (dog_name == NULL || dog_owner == NULL)
+for (index = 0; source[index]; index++)
+target[index] = source[index];
+target[index] = '\0';
+
+return (target);
+}
+
+/**
+* createDog - a function that creates a new dog
+*
+* @dogName: name of dog
+* @dogAge: age of dog
+* @dogOwner: dog owner
+*
+* Return: struct pointer dog
+*         NULL if function fails
+*/
+
+dog_t *new_dog(char *dogName, float dogAge, char *dogOwner)
 {
+dog_t *newDog;
+
+/* if dogName and dogOwner are empty and dogAge is less than zero return null*/
+if (!dogName || dogAge < 0 || !dogOwner)
+return (NULL);
+
+newDog = (dog_t *) malloc(sizeof(dog_t));
+if (newDog == NULL)
+return (NULL);
+
+newDog->name = malloc(sizeof(char) * (_getLength(dogName) + 1));
+if ((*newDog).name == NULL)
+{
+free(newDog);
 return (NULL);
 }
 
-fido = malloc(sizeof(dog_t));
-if (fido == NULL)
+newDog->owner = malloc(sizeof(char) * (_getLength(dogOwner) + 1));
+if ((*newDog).owner == NULL)
 {
+free(newDog->name);
+free(newDog);
 return (NULL);
 }
 
-copy_name = _duplicate(dog_name);
-if (copy_name == NULL)
-{
-free(fido);
-return (NULL);
-}
-(*fido).name = copy_name;
+newDog->name = _copyString(newDog->name, dogName);
+newDog->age = dogAge;
+newDog->owner = _copyString(newDog->owner, dogOwner);
 
-(*fido).age = dog_age;
-
-copy_owner = _duplicate(dog_owner);
-if (copy_owner == NULL)
-{
-free((*fido).name);
-free(fido);
-return (NULL);
-}
-(*fido).owner = copy_owner;
-
-return (fido);
+return (newDog);
 }
