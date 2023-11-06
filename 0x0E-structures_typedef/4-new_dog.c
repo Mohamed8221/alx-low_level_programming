@@ -33,5 +33,5 @@ free(new_dog);
 return (NULL);
 }
 
-return (new_dog);
+
 }
