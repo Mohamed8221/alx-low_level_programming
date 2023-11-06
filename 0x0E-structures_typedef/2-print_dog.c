@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
+#include "dog.h"
 /**
 * print_dog - Prints the contents of a struct dog.
 * @d: Pointer to the struct dog to be printed.
