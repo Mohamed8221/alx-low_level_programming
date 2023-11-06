@@ -21,6 +21,6 @@ void init_dog(struct dog *d, char *name, float age, char *owner);
 typedef struct dog dog_t;
 dog_t *new_dog(char *name, float age, char *owner);
 void free_dog(dog_t *d);
-char *_duplicate(char *input);
+char *copy_string(char *src);
 
 #endif
