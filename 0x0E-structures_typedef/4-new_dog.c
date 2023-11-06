@@ -2,23 +2,22 @@
 #include "dog.h"
 
 /**
-* _strdup - Create a copy of the input string
-* @src: The string to be duplicated
-*
-* Return: A pointer to the new string
+* _duplicate  -   Make a copy of passed in argument
+* @original:      Data to make copy of
+* Return:    Pointer
 */
 
-char *_strdup(char *src)
+char *_duplicate(char *original)
 {
 char *copy;
-int i, length;
+int index, length;
 
-if (src == NULL)
+if (original == NULL)
 {
 return (NULL);
 }
 
-for (length = 0; src[length] != '\0'; length++)
+for (length = 0; original[length] != '\0'; length++)
 ;
 
 copy = malloc(sizeof(char) * (length + 1));
@@ -28,57 +27,57 @@ if (copy == NULL)
 return (NULL);
 }
 
-for (i = 0; src[i] != '\0'; i++)
+for (index = 0; original[index] != '\0'; index++)
 {
-copy[i] = src[i];
+copy[index] = original[index];
 }
 
-copy[i] = '\0';
+copy[index] = '\0';
 return (copy);
 }
 
 /**
-* create_dog - Create a new dog structure
-* @name: Name of the dog
-* @age: Age of the dog
-* @owner: Owner of the dog
-* Return: Pointer to the new dog structure
+* create_dog     - Create a new dog variable
+* @dog_name:        Name of the dog
+* @dog_age:         Age of the dog
+* @dog_owner:       Owner of the dog
+* Return:       Pointer to new dog variable
 */
 
-dog_t *new_dog(char *name, float age, char *owner)
+dog_t *create_dog(char *dog_name, float dog_age, char *dog_owner)
 {
-dog_t *new_dog;
-char *new_name, *new_owner;
+dog_t *fido;
+char *copy_name, *copy_owner;
 
-if (name == NULL || owner == NULL)
-{
-return (NULL);
-}
-
-new_dog = malloc(sizeof(dog_t));
-if (new_dog == NULL)
+if (dog_name == NULL || dog_owner == NULL)
 {
 return (NULL);
 }
 
-new_name = _strdup(name);
-if (new_name == NULL)
+fido = malloc(sizeof(dog_t));
+if (fido == NULL)
 {
-free(new_dog);
 return (NULL);
 }
-new_dog->name = new_name;
 
-new_dog->age = age;
-
-new_owner = _strdup(owner);
-if (new_owner == NULL)
+copy_name = _duplicate(dog_name);
+if (copy_name == NULL)
 {
-free(new_dog->name);
-free(new_dog);
+free(fido);
 return (NULL);
 }
-new_dog->owner = new_owner;
+(*fido).name = copy_name;
 
-return (new_dog);
+(*fido).age = dog_age;
+
+copy_owner = _duplicate(dog_owner);
+if (copy_owner == NULL)
+{
+free((*fido).name);
+free(fido);
+return (NULL);
+}
+(*fido).owner = copy_owner;
+
+return (fido);
 }
