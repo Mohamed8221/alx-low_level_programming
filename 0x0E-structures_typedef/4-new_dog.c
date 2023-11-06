@@ -2,51 +2,52 @@
 #include "dog.h"
 
 /**
-* _copy  -   Make a copy of passed in argument
-* @src:      Data to make copy of
-* Return:    Pointer
+* _strdup - Create a copy of the input string
+* @src: The string to be duplicated
+*
+* Return: A pointer to the new string
 */
 
-char *_copy(char *src)
+char *_strdup(char *src)
 {
-char *ptr;
-int i, len;
+char *copy;
+int i, length;
 
 if (src == NULL)
 {
 return (NULL);
 }
 
-for (len = 0; src[len] != '\0'; len++)
+for (length = 0; src[length] != '\0'; length++)
 ;
 
-ptr = malloc(sizeof(char) * (len + 1));
+copy = malloc(sizeof(char) * (length + 1));
 
-if (ptr == NULL)
+if (copy == NULL)
 {
 return (NULL);
 }
 
 for (i = 0; src[i] != '\0'; i++)
 {
-ptr[i] = src[i];
+copy[i] = src[i];
 }
 
-ptr[i] = '\0';
-return (ptr);
+copy[i] = '\0';
+return (copy);
 }
 
 /**
-* new_dog     - Create a new dog variable
-* @name:        Name of the dog
-* @age:         Age of the dog
-* @owner:       Owner of the dog
-* Return:       Pointer to new dog variable
+* create_dog - Create a new dog structure
+* @name: Name of the dog
+* @age: Age of the dog
+* @owner: Owner of the dog
+* Return: Pointer to the new dog structure
 */
 
 dog_t *new_dog(char *name, float age, char *owner)
 {
-dog_t *snoopie;
+dog_t *new_dog;
 char *new_name, *new_owner;
 
 if (name == NULL || owner == NULL)
@@ -54,30 +55,30 @@ if (name == NULL || owner == NULL)
 return (NULL);
 }
 
-snoopie = malloc(sizeof(dog_t));
-if (snoopie == NULL)
+new_dog = malloc(sizeof(dog_t));
+if (new_dog == NULL)
 {
 return (NULL);
 }
 
-new_name = _copy(name);
+new_name = _strdup(name);
 if (new_name == NULL)
 {
-free(snoopie);
+free(new_dog);
 return (NULL);
 }
-(*snoopie).name = new_name;
+new_dog->name = new_name;
 
-(*snoopie).age = age;
+new_dog->age = age;
 
-new_owner = _copy(owner);
+new_owner = _strdup(owner);
 if (new_owner == NULL)
 {
-free((*snoopie).name);
-free(snoopie);
+free(new_dog->name);
+free(new_dog);
 return (NULL);
 }
-(*snoopie).owner = new_owner;
+new_dog->owner = new_owner;
 
-return (snoopie);
+return (new_dog);
 }
