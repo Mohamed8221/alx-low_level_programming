@@ -3,38 +3,39 @@
 #include <string.h>
 #include "dog.h"
 /**
-* new_dog - Creates a new dog and returns a pointer to it.
-* @name: The name of the dog.
-* @age: The age of the dog.
-* @owner: The name of the dog's owner.
+* new_dog - creates a new dog
+* @name: name of the dog
+* @age: age of the dog
+* @owner: owner of the dog
 *
-* Return: A pointer to the new dog, or NULL if the function fails.
+* Return: pointer to the new dog_t
 */
-dog_t *new_dog(char *name, float age, char *owner) {
-/* Check for NULL inputs */
-if (name == NULL || owner == NULL) {
+dog_t *new_dog(char *name, float age, char *owner)
+{
+dog_t *new_dog;
+
+new_dog = malloc(sizeof(dog_t));
+if (new_dog == NULL)
+{
 return (NULL);
 }
 
-/* Allocate memory for the dog_t structure and strings */
-dog_t *newDog = (dog_t *)malloc(sizeof(dog_t));
-
-if (newDog == NULL) {
-return (NULL);  /* Memory allocation for the structure failed. */
-}
-
-newDog->name = strdup(name);
-newDog->owner = strdup(owner);
-
-if (newDog->name == NULL || newDog->owner == NULL) {
-/* Memory allocation for strings failed, clean up and return NULL */
-free(newDog->name);
-free(newDog->owner);
-free(newDog);
+new_dog->name = strdup(name);
+if (new_dog->name == NULL)
+{
+free(new_dog);
 return (NULL);
 }
 
-newDog->age = age;
+new_dog->age = age;
 
-return (newDog);
+new_dog->owner = strdup(owner);
+if (new_dog->owner == NULL)
+{
+free(new_dog->name);
+free(new_dog);
+return (NULL);
+}
+
+return (new_dog);
 }
