@@ -1,79 +1,52 @@
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 /**
-* print_all - prints anything
-* @format: list of types of arguments passed to the function
+* print_all - prints values based on a format string
+* @format: a format string containing type specifiers
+* @...: variable number of arguments corresponding to the format string
 */
 void print_all(const char * const format, ...)
 {
 va_list args;
-int i = 0, j;
-char *sep = "", *str;
-
-void (*print_func[])(va_list) = {
-(void *)print_char,
-(void *)print_int,
-(void *)print_float,
-(void *)print_string
-};
-
-char print_type[] = "cifs";
+int i = 0;
 
 va_start(args, format);
+
 while (format && format[i])
 {
-j = 0;
-while (j < 4 && format[i] != print_type[j])
-j++;
-if (j < 4)
+if (i > 0)
+printf(", ");
+
+if (format[i] == 'c')
 {
-printf("%s", sep);
-print_funcj;
-sep = ", ";
+char c = va_arg(args, int);
+printf("%c", c);
+}
+else if (format[i] == 'i')
+{
+int num = va_arg(args, int);
+printf("%d", num);
+}
+else if (format[i] == 'f')
+{
+double num = va_arg(args, double);
+printf("%f", num);
+}
+else if (format[i] == 's')
+{
+char *str = va_arg(args, char *);
+if (str)
+printf("%s", str);
+else
+printf("(nil)");
 }
 i++;
+
+while (format[i] && (format[i] == 'c' || format[i] == 'i' || format[i] == 'f' || format[i] == 's'))
+i++;
 }
-printf("\n");
+
 va_end(args);
-}
-
-/**
-* print_char - prints a char
-* @args: va_list of arguments
-*/
-void print_char(va_list args)
-{
-printf("%c", va_arg(args, int));
-}
-
-/**
-* print_int - prints an int
-* @args: va_list of arguments
-*/
-void print_int(va_list args)
-{
-printf("%d", va_arg(args, int));
-}
-
-/**
-* print_float - prints a float
-* @args: va_list of arguments
-*/
-void print_float(va_list args)
-{
-printf("%f", va_arg(args, double));
-}
-
-/**
-* print_string - prints a string
-* @args: va_list of arguments
-*/
-void print_string(va_list args)
-{
-char *str = va_arg(args, char*);
-
-if (str == NULL)
-str = "(nil)";
-printf("%s", str);
+printf("\n");
 }
