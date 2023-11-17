@@ -1,5 +1,5 @@
 section .data
-    hello db 'Hello, Holberton', 10, 0 ; 10 is the ASCII value for newline
+    hello db "Hello, Holberton", 10, 0 ; 10 is the ASCII value for newline
 
 section .text
     global main
@@ -7,11 +7,13 @@ section .text
 
 main:
     ; Prepare the arguments for printf
+    sub rsp, 8
     mov rdi, hello     ; The format string
     xor rax, rax       ; Zero out rax to pass only one argument
 
     ; Call printf
     call printf
+    add rsp, 8
 
     ; Return from main
     mov eax, 60        ; The syscall number for sys_exit
