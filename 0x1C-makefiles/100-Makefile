@@ -4,6 +4,8 @@ OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
 
+.PHONY: all clean fclean oclean re
+
 all: $(NAME)
 
 $(NAME): $(OBJ)
