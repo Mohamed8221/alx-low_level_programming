@@ -1,6 +1,6 @@
 NAME = school
 SRC =  main.c school.c
-OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
+OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
 
